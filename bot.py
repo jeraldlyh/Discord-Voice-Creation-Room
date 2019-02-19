@@ -202,7 +202,7 @@ async def claim(ctx):
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Activity(name='Your PMs', type=2))
+    await bot.change_presence(activity=discord.Activity(name='Custom Channels', type=2))
     time_now = datetime.now(tz=pytz.timezone('Asia/Singapore'))
     login_time = time_now.strftime('%d-%m-%Y %I:%M %p')
     print("-----------------")
