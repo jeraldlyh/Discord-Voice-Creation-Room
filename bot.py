@@ -30,7 +30,7 @@ async def on_voice_state_update(member, before, after):
 async def auto_room(member, channel):
     '''Auto room creation function'''
     cat = discord.utils.get(member.guild.categories, name='⭐ Custom Channels')  
-    channelName = member.display_name + " 's Channel"
+    channelName = member.display_name + "'s Channel"
     newChannel = await member.guild.create_voice_channel(channelName, overwrites={
                     member.guild.default_role: discord.PermissionOverwrite(connect=True, speak=True),
                     member: discord.PermissionOverwrite(manage_channels=True, mute_members=True, deafen_members=True, connect=True, speak=True)
