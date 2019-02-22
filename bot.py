@@ -46,57 +46,72 @@ def channel_exception(channel_name):
 @bot.command()
 async def lock(ctx):
     '''Locks voice channel'''
-    overwrite = discord.PermissionOverwrite(connect=False)
-    try:
-        channel = ctx.message.author.voice.channel
-        if ctx.message.author.permissions_in(channel).manage_channels:
-            await channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
-            embed = discord.Embed(description='{0} You have successfully locked the voice channel.'.format(ctx.message.author.mention))
-            embed.color = discord.Color.green()
+    if ctx.message.channel.name != 'command-logs':
+        log = discord.utils.get(ctx.message.guild.channels, name='solo-leaderboard')
+        eembed = errorembed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
+        return await ctx.send(embed=eembed)
+    else:
+        overwrite = discord.PermissionOverwrite(connect=False)
+        try:
+            channel = ctx.message.author.voice.channel
+            if ctx.message.author.permissions_in(channel).manage_channels:
+                await channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
+                embed = discord.Embed(description='{0} You have successfully locked the voice channel.'.format(ctx.message.author.mention))
+                embed.color = discord.Color.green()
+                await ctx.send(embed=embed)
+            else:
+                embed = discord.Embed(description='{0} You are not the owner of the voice channel.'.format(ctx.message.author.mention))
+                embed.color = discord.Color.red()   
+                await ctx.send(embed=embed)     
+        except:
+            embed = discord.Embed(description='{0} You are not connected to any voice channel.'.format(ctx.message.author.mention))
+            embed.color = discord.Color.red()
             await ctx.send(embed=embed)
-        else:
-            embed = discord.Embed(description='{0} You are not the owner of the voice channel.'.format(ctx.message.author.mention))
-            embed.color = discord.Color.red()   
-            await ctx.send(embed=embed)     
-    except:
-        embed = discord.Embed(description='{0} You are not connected to any voice channel.'.format(ctx.message.author.mention))
-        embed.color = discord.Color.red()
-        await ctx.send(embed=embed)
 
 @bot.command()
 async def unlock(ctx):
     '''Unlocks voice channel'''
-    overwrite = discord.PermissionOverwrite(connect=True)
-    try:
+    if ctx.message.channel.name != 'command-logs':
+        log = discord.utils.get(ctx.message.guild.channels, name='solo-leaderboard')
+        eembed = errorembed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
+        return await ctx.send(embed=eembed)
+    else:    
+        overwrite = discord.PermissionOverwrite(connect=True)
+        try:
+            channel = ctx.message.author.voice.channel
+            if ctx.message.author.permissions_in(channel).manage_channels:
+                await channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
+                embed = discord.Embed(description='{0} You have successfully unlocked the voice channel.'.format(ctx.message.author.mention))
+                embed.color = discord.Color.green()
+                await ctx.send(embed=embed)
+            else:
+                embed = discord.Embed(description='{0} You are not the owner of the voice channel.'.format(ctx.message.author.mention))
+                embed.color = discord.Color.red()   
+                await ctx.send(embed=embed)    
+        except:
+            embed = discord.Embed(description='{0} You are not connected to any voice channel.'.format(ctx.message.author.mention))
+            embed.color = discord.Color.red()
+            await ctx.send(embed=embed)
+
+@bot.command()
+async def deny(ctx, member:discord.Member):
+    '''Deny User access to voice channel'''
+    if ctx.message.channel.name != 'command-logs':
+        log = discord.utils.get(ctx.message.guild.channels, name='solo-leaderboard')
+        eembed = errorembed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
+        return await ctx.send(embed=eembed)
+    else:    
+        overwrite = discord.PermissionOverwrite(connect=False)
         channel = ctx.message.author.voice.channel
-        if ctx.message.author.permissions_in(channel).manage_channels:
-            await channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
-            embed = discord.Embed(description='{0} You have successfully unlocked the voice channel.'.format(ctx.message.author.mention))
+        if ctx.message.author.permissions_in(channel).manage_channels:   
+            await channel.set_permissions(member, overwrite=overwrite)
+            embed = discord.Embed(description='{0} You have successfully denied {1} to access the voice channel.'.format(ctx.message.author.mention, member.mention))
             embed.color = discord.Color.green()
             await ctx.send(embed=embed)
         else:
             embed = discord.Embed(description='{0} You are not the owner of the voice channel.'.format(ctx.message.author.mention))
             embed.color = discord.Color.red()   
-            await ctx.send(embed=embed)    
-    except:
-        embed = discord.Embed(description='{0} You are not connected to any voice channel.'.format(ctx.message.author.mention))
-        embed.color = discord.Color.red()
-        await ctx.send(embed=embed)
-
-@bot.command()
-async def deny(ctx, member:discord.Member):
-    '''Deny User access to voice channel'''
-    overwrite = discord.PermissionOverwrite(connect=False)
-    channel = ctx.message.author.voice.channel
-    if ctx.message.author.permissions_in(channel).manage_channels:   
-        await channel.set_permissions(member, overwrite=overwrite)
-        embed = discord.Embed(description='{0} You have successfully denied {1} to access the voice channel.'.format(ctx.message.author.mention, member.mention))
-        embed.color = discord.Color.green()
-        await ctx.send(embed=embed)
-    else:
-        embed = discord.Embed(description='{0} You are not the owner of the voice channel.'.format(ctx.message.author.mention))
-        embed.color = discord.Color.red()   
-        await ctx.send(embed=embed)
+            await ctx.send(embed=embed)
           
 @deny.error
 async def deny_error(ctx, error):
@@ -118,17 +133,22 @@ async def deny_error(ctx, error):
 @bot.command()
 async def allow(ctx, member:discord.Member):
     '''Grant User access to voice channel'''
-    overwrite = discord.PermissionOverwrite(connect=True)
-    channel = ctx.message.author.voice.channel
-    if ctx.message.author.permissions_in(channel).manage_channels:   
-        await channel.set_permissions(member, overwrite=overwrite)
-        embed = discord.Embed(description='{0} You have successfully granted {1} to access the voice channel.'.format(ctx.message.author.mention, member.mention))
-        embed.color = discord.Color.green()
-        await ctx.send(embed=embed)
-    else:
-        embed = discord.Embed(description='{0} You are not the owner of the voice channel.'.format(ctx.message.author.mention))
-        embed.color = discord.Color.red()   
-        await ctx.send(embed=embed)
+    if ctx.message.channel.name != 'command-logs':
+        log = discord.utils.get(ctx.message.guild.channels, name='solo-leaderboard')
+        eembed = errorembed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
+        return await ctx.send(embed=eembed)
+    else:    
+        overwrite = discord.PermissionOverwrite(connect=True)
+        channel = ctx.message.author.voice.channel
+        if ctx.message.author.permissions_in(channel).manage_channels:   
+            await channel.set_permissions(member, overwrite=overwrite)
+            embed = discord.Embed(description='{0} You have successfully granted {1} to access the voice channel.'.format(ctx.message.author.mention, member.mention))
+            embed.color = discord.Color.green()
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(description='{0} You are not the owner of the voice channel.'.format(ctx.message.author.mention))
+            embed.color = discord.Color.red()   
+            await ctx.send(embed=embed)
 
 @allow.error
 async def allow_error(ctx, error):
@@ -150,22 +170,27 @@ async def allow_error(ctx, error):
 @bot.command()
 async def kick(ctx, member:discord.Member):
     '''Kicks a User and move to Dumpster Bin'''
-    dump = discord.utils.get(ctx.message.guild.channels, name='afk')
-    channel = ctx.message.author.voice.channel
-    if ctx.message.author.permissions_in(channel).manage_channels:
-        if member in channel.members:
-            await member.move_to(dump, reason = 'Kicked out of Channel')
-            embed = discord.Embed(description='{0} You have successfully kicked {1} out of the voice channel.'.format(ctx.message.author.mention, member.mention))
-            embed.color = discord.Color.green()
-            await ctx.send(embed=embed)
+    if ctx.message.channel.name != 'command-logs':
+        log = discord.utils.get(ctx.message.guild.channels, name='solo-leaderboard')
+        eembed = errorembed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
+        return await ctx.send(embed=eembed)
+    else:    
+        dump = discord.utils.get(ctx.message.guild.channels, name='💤 AFK')
+        channel = ctx.message.author.voice.channel
+        if ctx.message.author.permissions_in(channel).manage_channels:
+            if member in channel.members:
+                await member.move_to(dump, reason = 'Kicked out of Channel')
+                embed = discord.Embed(description='{0} You have successfully kicked {1} out of the voice channel.'.format(ctx.message.author.mention, member.mention))
+                embed.color = discord.Color.green()
+                await ctx.send(embed=embed)
+            else:
+                embed = discord.Embed(description='{0} {1} is not present in the voice channel.'.format(member.mention, ctx.message.author.mention))
+                embed.color = discord.Color.red()   
+                await ctx.send(embed=embed)   
         else:
-            embed = discord.Embed(description='{0} {1} is not present in the voice channel.'.format(member.mention, ctx.message.author.mention))
+            embed = discord.Embed(description='{0} You are not the owner of the voice channel.'.format(ctx.message.author.mention))
             embed.color = discord.Color.red()   
-            await ctx.send(embed=embed)   
-    else:
-        embed = discord.Embed(description='{0} You are not the owner of the voice channel.'.format(ctx.message.author.mention))
-        embed.color = discord.Color.red()   
-        await ctx.send(embed=embed)
+            await ctx.send(embed=embed)
 
 @kick.error
 async def kick_error(ctx, error):
@@ -186,18 +211,23 @@ async def kick_error(ctx, error):
 
 @bot.command()
 async def claim(ctx):
-    channel = ctx.message.author.voice.channel
-    for x in channel.members:
-        if x.permissions_in(channel).manage_channels is True:
-            embed = discord.Embed(description='{0} The original voice channel owner {1} is still present.'.format(ctx.message.author.mention, channel.members[-0].mention))
-            embed.color = discord.Color.red()   
-            return await ctx.send(embed=embed)
-        else:
-            overwrite = discord.PermissionOverwrite(manage_channels=True, mute_members=True, deafen_members=True, connect=True, speak=True)
-            await channel.set_permissions(ctx.message.author,overwrite=overwrite) 
-            embed = discord.Embed(description='{0} You have successfully claimed the voice channel.'.format(ctx.message.author.mention))
-            embed.color = discord.Color.green()
-            return await ctx.send(embed=embed)
+    if ctx.message.channel.name != 'command-logs':
+        log = discord.utils.get(ctx.message.guild.channels, name='solo-leaderboard')
+        eembed = errorembed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
+        return await ctx.send(embed=eembed)
+    else:     
+        channel = ctx.message.author.voice.channel
+        for x in channel.members:
+            if x.permissions_in(channel).manage_channels is True:
+                embed = discord.Embed(description='{0} The original voice channel owner {1} is still present.'.format(ctx.message.author.mention, channel.members[-0].mention))
+                embed.color = discord.Color.red()   
+                return await ctx.send(embed=embed)
+            else:
+                overwrite = discord.PermissionOverwrite(manage_channels=True, mute_members=True, deafen_members=True, connect=True, speak=True)
+                await channel.set_permissions(ctx.message.author,overwrite=overwrite) 
+                embed = discord.Embed(description='{0} You have successfully claimed the voice channel.'.format(ctx.message.author.mention))
+                embed.color = discord.Color.green()
+                return await ctx.send(embed=embed)
     
 
 @bot.event
