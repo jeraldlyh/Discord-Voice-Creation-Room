@@ -239,7 +239,10 @@ async def on_ready():
     print('Logged in as {0} at {1}'.format(bot.user.name, login_time))
     print("-----------------")
 
-
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        return
 
 
 bot.run(os.environ.get('BOT_TOKEN'))
