@@ -47,7 +47,7 @@ def channel_exception(channel_name):
 async def lock(ctx):
     '''Locks voice channel'''
     if ctx.message.channel.name != 'command-logs':
-        log = discord.utils.get(ctx.message.guild.channels, name='solo-leaderboard')
+        log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
         eembed = errorembed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
         return await ctx.send(embed=eembed)
     else:
@@ -72,7 +72,7 @@ async def lock(ctx):
 async def unlock(ctx):
     '''Unlocks voice channel'''
     if ctx.message.channel.name != 'command-logs':
-        log = discord.utils.get(ctx.message.guild.channels, name='solo-leaderboard')
+        log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
         eembed = errorembed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
         return await ctx.send(embed=eembed)
     else:    
@@ -97,7 +97,7 @@ async def unlock(ctx):
 async def deny(ctx, member:discord.Member):
     '''Deny User access to voice channel'''
     if ctx.message.channel.name != 'command-logs':
-        log = discord.utils.get(ctx.message.guild.channels, name='solo-leaderboard')
+        log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
         eembed = errorembed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
         return await ctx.send(embed=eembed)
     else:    
@@ -134,7 +134,7 @@ async def deny_error(ctx, error):
 async def allow(ctx, member:discord.Member):
     '''Grant User access to voice channel'''
     if ctx.message.channel.name != 'command-logs':
-        log = discord.utils.get(ctx.message.guild.channels, name='solo-leaderboard')
+        log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
         eembed = errorembed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
         return await ctx.send(embed=eembed)
     else:    
@@ -171,7 +171,7 @@ async def allow_error(ctx, error):
 async def kick(ctx, member:discord.Member):
     '''Kicks a User and move to Dumpster Bin'''
     if ctx.message.channel.name != 'command-logs':
-        log = discord.utils.get(ctx.message.guild.channels, name='solo-leaderboard')
+        log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
         eembed = errorembed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
         return await ctx.send(embed=eembed)
     else:    
@@ -211,8 +211,9 @@ async def kick_error(ctx, error):
 
 @bot.command()
 async def claim(ctx):
+    '''Claims voice channel after Owner has left'''
     if ctx.message.channel.name != 'command-logs':
-        log = discord.utils.get(ctx.message.guild.channels, name='solo-leaderboard')
+        log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
         eembed = errorembed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
         return await ctx.send(embed=eembed)
     else:     
@@ -232,7 +233,7 @@ async def claim(ctx):
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Activity(name='Custom Channels', type=2))
+    #await bot.change_presence(activity=discord.Activity(name='Custom Channels', type=2))
     time_now = datetime.now(tz=pytz.timezone('Asia/Singapore'))
     login_time = time_now.strftime('%d-%m-%Y %I:%M %p')
     print("-----------------")
