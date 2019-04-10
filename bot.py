@@ -33,7 +33,7 @@ async def auto_room(member, channel):
     channelName = member.display_name + "'s Channel"
     newChannel = await member.guild.create_voice_channel(channelName, overwrites={
                     member.guild.default_role: discord.PermissionOverwrite(connect=True, speak=True),
-                    member: discord.PermissionOverwrite(manage_channels=True, mute_members=True, deafen_members=True, connect=True, speak=True)
+                    member: discord.PermissionOverwrite(manage_channels=True, connect=True, speak=True)
                     },
                     category=cat)
     await member.move_to(newChannel, reason='Temp Channel')
@@ -224,7 +224,7 @@ async def claim(ctx):
                 embed.color = discord.Color.red()   
                 return await ctx.send(embed=embed)
             else:
-                overwrite = discord.PermissionOverwrite(manage_channels=True, mute_members=True, deafen_members=True, connect=True, speak=True)
+                overwrite = discord.PermissionOverwrite(manage_channels=True, connect=True, speak=True)
                 await channel.set_permissions(ctx.message.author,overwrite=overwrite) 
                 embed = discord.Embed(description='{0} You have successfully claimed the voice channel.'.format(ctx.message.author.mention))
                 embed.color = discord.Color.green()
