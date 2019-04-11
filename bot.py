@@ -47,6 +47,7 @@ def channel_exception(channel_name):
 async def lock(ctx):
     '''Locks voice channel'''
     if ctx.message.channel.name != 'command-logs':
+        userMention = ctx.message.author.mention
         log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
         embed = discord.Embed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
         return await ctx.send(embed=embed)
@@ -72,6 +73,7 @@ async def lock(ctx):
 async def unlock(ctx):
     '''Unlocks voice channel'''
     if ctx.message.channel.name != 'command-logs':
+        userMention = ctx.message.author.mention
         log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
         embed = discord.Embed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
         return await ctx.send(embed=embed)
@@ -97,6 +99,7 @@ async def unlock(ctx):
 async def deny(ctx, member:discord.Member):
     '''Deny User access to voice channel'''
     if ctx.message.channel.name != 'command-logs':
+        userMention = ctx.message.author.mention
         log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
         embed = discord.Embed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
         return await ctx.send(embed=embed)
@@ -134,6 +137,7 @@ async def deny_error(ctx, error):
 async def allow(ctx, member:discord.Member):
     '''Grant User access to voice channel'''
     if ctx.message.channel.name != 'command-logs':
+        userMention = ctx.message.author.mention
         log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
         embed = discord.Embed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
         return await ctx.send(embed=embed)
@@ -171,6 +175,7 @@ async def allow_error(ctx, error):
 async def kick(ctx, member:discord.Member):
     '''Kicks a User and move to Dumpster Bin'''
     if ctx.message.channel.name != 'command-logs':
+        userMention = ctx.message.author.mention
         log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
         embed = discord.Embed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
         return await ctx.send(embed=embed)
@@ -213,6 +218,7 @@ async def kick_error(ctx, error):
 async def claim(ctx):
     '''Claims voice channel after Owner has left'''
     if ctx.message.channel.name != 'command-logs':
+        userMention = ctx.message.author.mention
         log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
         embed = discord.Embed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
         return await ctx.send(embed=embed)
