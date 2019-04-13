@@ -49,7 +49,7 @@ async def lock(ctx):
     if ctx.message.channel.name != 'command-logs':
         userMention = ctx.message.author.mention
         log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
-        embed = discord.Embed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
+        embed = discord.Embed(description='{0} Command can only be used in {1}'.format(userMention, log.mention))
         return await ctx.send(embed=embed)
     else:
         overwrite = discord.PermissionOverwrite(connect=False)
@@ -75,7 +75,7 @@ async def unlock(ctx):
     if ctx.message.channel.name != 'command-logs':
         userMention = ctx.message.author.mention
         log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
-        embed = discord.Embed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
+        embed = discord.Embed(description='{0} Command can only be used in {1}'.format(userMention, log.mention))
         return await ctx.send(embed=embed)
     else:    
         overwrite = discord.PermissionOverwrite(connect=True)
@@ -101,7 +101,7 @@ async def deny(ctx, member:discord.Member):
     if ctx.message.channel.name != 'command-logs':
         userMention = ctx.message.author.mention
         log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
-        embed = discord.Embed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
+        embed = discord.Embed(description='{0} Command can only be used in {1}'.format(userMention, log.mention))
         return await ctx.send(embed=embed)
     else:    
         overwrite = discord.PermissionOverwrite(connect=False)
@@ -139,7 +139,7 @@ async def allow(ctx, member:discord.Member):
     if ctx.message.channel.name != 'command-logs':
         userMention = ctx.message.author.mention
         log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
-        embed = discord.Embed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
+        embed = discord.Embed(description='{0} Command can only be used in {1}'.format(userMention, log.mention))
         return await ctx.send(embed=embed)
     else:    
         overwrite = discord.PermissionOverwrite(connect=True)
@@ -177,7 +177,7 @@ async def kick(ctx, member:discord.Member):
     if ctx.message.channel.name != 'command-logs':
         userMention = ctx.message.author.mention
         log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
-        embed = discord.Embed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
+        embed = discord.Embed(description='{0} Command can only be used in {1}'.format(userMention, log.mention))
         return await ctx.send(embed=embed)
     else:    
         dump = discord.utils.get(ctx.message.guild.channels, name='💤 AFK')
@@ -220,7 +220,7 @@ async def claim(ctx):
     if ctx.message.channel.name != 'command-logs':
         userMention = ctx.message.author.mention
         log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
-        embed = discord.Embed(description='**{0} Command can only be used in {1}**'.format(userMention, log.mention))
+        embed = discord.Embed(description='{0} Command can only be used in {1}'.format(userMention, log.mention))
         return await ctx.send(embed=embed)
     else:     
         channel = ctx.message.author.voice.channel
