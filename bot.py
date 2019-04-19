@@ -24,7 +24,7 @@ async def on_voice_state_update(member, before, after):
                           await channel.delete(reason="Empty Temp Channel")
     
     if after.channel is not None:
-        if after.channel.name.startswith('🔑'):
+        if after.channel.name.startswith('CLICK'):
             await auto_room(member, after.channel)
 
 async def auto_room(member, channel):
@@ -41,7 +41,7 @@ async def auto_room(member, channel):
 # Prevents deletion of Autoroom creation channel
 def channel_exception(channel_name):
     #if channel_name == '🔑 Materials Generator':
-    if channel_name == '🔑 CLICK TO CREATE VC':
+    if channel_name == 'CLICK TO CREATE VC':
           return True
 
 @bot.command()
