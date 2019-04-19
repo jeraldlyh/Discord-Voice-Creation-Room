@@ -41,7 +41,7 @@ async def auto_room(member, channel):
 # Prevents deletion of Autoroom creation channel
 def channel_exception(channel_name):
     #if channel_name == '🔑 Materials Generator':
-    if channel_name == str('CLICK TO CREATE VC'):
+    if channel_name == '🔑 CLICK TO CREATE VC':
           return True
 
 @bot.command()
