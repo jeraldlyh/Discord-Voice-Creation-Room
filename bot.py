@@ -24,6 +24,7 @@ async def on_voice_state_update(member, before, after):
                           await channel.delete(reason="Empty Temp Channel")
     
     if after.channel is not None:
+        #if after.channel.name.startswith('🔑'):
         if after.channel.name.startswith('CLICK'):
             await auto_room(member, after.channel)
 
