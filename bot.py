@@ -17,7 +17,7 @@ async def on_voice_state_update(member, before, after):
     
     with contextlib.suppress(Exception):
         for category in before.channel.guild.categories:
-            if category.name == '⭐ Custom Channels':
+            if category.name == '🎤 Custom Channels':
                 for channel in category.voice_channels:
                     if not channel.members and not channel_exception(channel.name):
                         if channel.created_at < datetime.utcnow():          
@@ -29,7 +29,7 @@ async def on_voice_state_update(member, before, after):
 
 async def auto_room(member, channel):
     '''Auto room creation function'''
-    cat = discord.utils.get(member.guild.categories, name='⭐ Custom Channels')  
+    cat = discord.utils.get(member.guild.categories, name='🎤 Custom Channels')  
     channelName = member.display_name + "'s Channel"
     newChannel = await member.guild.create_voice_channel(channelName, overwrites={
                     member.guild.default_role: discord.PermissionOverwrite(connect=True, speak=True),
