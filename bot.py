@@ -105,6 +105,10 @@ async def deny(ctx, member:discord.Member):
         log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
         embed = discord.Embed(description='{0} Command can only be used in {1}'.format(userMention, log.mention))
         return await ctx.send(embed=embed)
+    if member is ctx.author:
+        embed = discord.Embed(description='{0} You cannot deny yourself from the voice channel.'.format(ctx.message.author.mention))
+        embed.color = discord.Color.red()
+        return await ctx.send(embed=embed)
     else:    
         overwrite = discord.PermissionOverwrite(connect=False)
         channel = ctx.message.author.voice.channel
@@ -142,6 +146,10 @@ async def allow(ctx, member:discord.Member):
         userMention = ctx.message.author.mention
         log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
         embed = discord.Embed(description='{0} Command can only be used in {1}'.format(userMention, log.mention))
+        return await ctx.send(embed=embed)
+    if member is ctx.author:
+        embed = discord.Embed(description='{0} You are already the owner of the voice channel.'.format(ctx.message.author.mention))
+        embed.color = discord.Color.red()
         return await ctx.send(embed=embed)
     else:    
         overwrite = discord.PermissionOverwrite(connect=True)
@@ -181,12 +189,18 @@ async def kick(ctx, member:discord.Member):
         log = discord.utils.get(ctx.message.guild.channels, name='command-logs')
         embed = discord.Embed(description='{0} Command can only be used in {1}'.format(userMention, log.mention))
         return await ctx.send(embed=embed)
+    if member is ctx.author:
+        embed = discord.Embed(description='{0} You cannot kick yourself from the voice channel.'.format(ctx.message.author.mention))
+        embed.color = discord.Color.red()
+        return await ctx.send(embed=embed)        
     else:    
         dump = discord.utils.get(ctx.message.guild.channels, name='💤 AFK')
+        overwrite = discord.PermissionOverwrite(connect=False)
         channel = ctx.message.author.voice.channel
         if ctx.message.author.permissions_in(channel).manage_channels:
             if member in channel.members:
                 await member.move_to(dump, reason = 'Kicked out of Channel')
+                await channel.set_permissions(member, overwrite=overwrite)
                 embed = discord.Embed(description='{0} You have successfully kicked {1} out of the voice channel.'.format(ctx.message.author.mention, member.mention))
                 embed.color = discord.Color.green()
                 await ctx.send(embed=embed)
@@ -254,5 +268,5 @@ async def on_command_error(ctx, error):
         return
 
 
-bot.run(os.environ.get('BOT_TOKEN'))
+bot.run('NTQ4NDk4NjU5ODAxNjk0MjA5.XQO0kg.S7asYB3FlAuk-lFJNeYfOXizXh4')
     
