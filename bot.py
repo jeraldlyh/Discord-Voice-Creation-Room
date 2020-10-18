@@ -268,5 +268,5 @@ async def on_command_error(ctx, error):
         return
 
 
-bot.run('NTQ4NDk4NjU5ODAxNjk0MjA5.XQO0kg.S7asYB3FlAuk-lFJNeYfOXizXh4')
+bot.run('INSERT YOUR BOT TOKEN HERE')
     
