@@ -13,4 +13,4 @@ This module allows users to automatically create their own personal voice channe
 # Notes
 - All commands are usable only in a text channel titled `command-logs`
 - Room creation module is only executable under the category titled `🎤 Custom Channels`
-- Able to customise the channel names accordingly to your preferences in the script
+- Tweak and configure the category/channel name accordingly to your preference in the script by replacing CTRL+F and replace the default name stated above.
